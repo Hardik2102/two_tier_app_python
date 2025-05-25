@@ -2,7 +2,8 @@ pipeline {
     agent any
 
     environment {
-        BACKEND_HOST = "ubuntu@3.82.228.121"
+        FRONTEND_IP = "18.208.178.181"
+        BACKEND_HOST = "ubuntu@44.211.168.136"
     }
 
     stages {
@@ -30,17 +31,17 @@ pipeline {
 
         stage('Deploy Backend to Remote EC2') {
             steps {
-                sshagent(credentials: ['backend-key']) {
+                sshagent(['backend-key']) {
                     sh '''
-                        ssh -o StrictHostKeyChecking=no $BACKEND_HOST << EOF
-                            docker stop backend || true
-                            docker rm backend || true
-                            rm -rf two_tier_app_python || true
-                            git clone https://github.com/Hardik2102/two_tier_app_python.git
-                            cd two_tier_app_python/backend
-                            docker build -t backend-app .
-                            docker run -d -p 5000:5000 --name backend backend-app
-                        EOF
+                    ssh -o StrictHostKeyChecking=no $BACKEND_HOST '
+                        docker stop backend || true
+                        docker rm backend || true
+                        rm -rf two_tier_app_python || true
+                        git clone https://github.com/Hardik2102/two_tier_app_python.git
+                        cd two_tier_app_python/backend
+                        docker build -t backend-app .
+                        docker run -d -p 5000:5000 --name backend backend-app
+                    '
                     '''
                 }
             }
