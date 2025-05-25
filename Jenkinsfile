@@ -3,7 +3,7 @@ pipeline {
     stages {
         stage('Clone Repo') {
             steps {
-                git 'https://github.com/your-username/your-repo.git'
+                git 'https://github.com/Hardik2102/two_tier_app_python.git'
             }
         }
         stage('Build Backend Docker Image') {
