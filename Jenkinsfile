@@ -33,7 +33,7 @@ pipeline {
                 sshagent(['jenkins-backend-access']) {
                     script {
                         sh '''
-                        ssh -o StrictHostKeyChecking=no ubuntu@44.211.168.136 "
+                        ssh -o StrictHostKeyChecking=no ubuntu@18.206.140.74 "
                             docker stop backend || true
                             docker rm backend || true
                             rm -rf two_tier_app_python || true
